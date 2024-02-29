@@ -220,8 +220,8 @@ def create_venue_submission():
   try:
     seeking_talent = True if form.seeking_talent.data == "Yes" else False
     create_venue = Venue(
-      name=form.name.data.strip(),
-      city=form.city.data.strip(),
+      name=form.name.data,
+      city=form.city.data,
       state=form.state.data,
       address=form.address.data,
       phone=form.phone.data,
@@ -397,8 +397,8 @@ def create_artist_submission():
   try:
     seeking_venue = True if form.seeking_venue.data == "Yes" else False
     create_artist = Artist(
-        name=form.name.data.strip(),
-        city=form.city.data.strip(),
+        name=form.name.data,
+        city=form.city.data,
         state=form.state.data,
         phone=form.phone.data,
         genres=form.genres.data,
