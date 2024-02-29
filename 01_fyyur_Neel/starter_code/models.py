@@ -1,10 +1,11 @@
 # File containing the models to ensure Code Decoupling and Separation of Concerns
 
 #Imports
-from app import db
+from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 
 
+db = SQLAlchemy()
 
 #----------------------------------------------------------------------------#
 # Models.

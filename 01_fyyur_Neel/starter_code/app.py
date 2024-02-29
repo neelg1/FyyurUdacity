@@ -13,7 +13,7 @@ from flask_migrate import Migrate
 from logging import Formatter, FileHandler
 from flask_wtf import Form
 from forms import *
-from models import Artist, Venue, Show
+from models import db, Venue, Artist, Show
 #----------------------------------------------------------------------------#
 # App Config.
 #----------------------------------------------------------------------------#
@@ -21,7 +21,7 @@ from models import Artist, Venue, Show
 app = Flask(__name__)
 moment = Moment(app)
 app.config.from_object('config')
-db = SQLAlchemy(app)
+db.init_app(app)
 
 # Completed: connect to a local postgresql database
 migrate = Migrate(app, db)
@@ -57,15 +57,19 @@ def venues():
   # Completed: replace with real venues data.
   #       num_upcoming_shows should be aggregated based on number of upcoming shows per venue.
 
+
   places = db.session.query(Venue.city, Venue.state).distinct(Venue.city, Venue.state)
+  #print(Venue.city, Venue.state)
   answer = []
 
   for place in places:
      result = Venue.query.filter(Venue.state == place.state).filter(Venue.city == place.city).all()
-
+     #print(Venue.city)
+    
      venue_related_data = []
 
      for venue in result:
+        #print(venue)
         venue_related_data.append({
            'id': venue.id,
            'name': venue.name,
@@ -164,6 +168,7 @@ def create_venue_submission():
     seeking_talent = True if form.seeking_talent.data == "Yes" else False
     create_venue = Venue(
       name=form.name.data,
+      #request.form['name'],
       city=form.city.data,
       state=form.state.data,
       address=form.address.data,
